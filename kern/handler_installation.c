@@ -7,13 +7,14 @@
  *  @bug No known bugs.
  */
 
-#include <x86/asm.h>
-#include <x86/seg.h>  
+#include <asm.h>
+#include <seg.h>  
 #include <simics.h>    
 #include <ctype.h>
 #include <string.h>
 #include <timer_defines.h>
 #include <keyhelp.h>
+#include <handler_installation.h>
 
 #include "device_drivers.h"
 

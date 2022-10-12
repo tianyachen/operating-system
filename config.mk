@@ -132,7 +132,7 @@ STUDENTFILES =
 ###########################################################################
 # Object files for your thread library
 ###########################################################################
-THREAD_OBJS = malloc.o panic.o
+THREAD_OBJS = malloc.o panic.o mutex.o atomic_increment.o cond_var.o thread.o thread_helpers.o create_new_thread.o read_ebp.o semaphore.o swexn_handler.o rwlock.o rwlock_helper.o
 
 # Thread Group Library Support.
 #
@@ -140,12 +140,12 @@ THREAD_OBJS = malloc.o panic.o
 # P3" we give you can't build libthrgrp.a.  Once you install your thread
 # library and fix THREAD_OBJS above, uncomment this line to enable building
 # libthrgrp.a:
-#410USER_LIBS_EARLY += libthrgrp.a
+410USER_LIBS_EARLY += libthrgrp.a
 
 ###########################################################################
 # Object files for your syscall wrappers
 ###########################################################################
-SYSCALL_OBJS = syscall.o
+SYSCALL_OBJS = FORK.o EXEC.o WAIT.o YIELD.o DESCHEDULE.o MAKE_RUNNABLE.o GETTID.o NEW_PAGES.o REMOVE_PAGES.o SLEEP.o GETCHAR.o READLINE.o PRINT.o SET_TERM_COLOR.o SET_CURSOR_POS.o GET_CURSOR_POS.o GET_TICKS.o MISBEHAVE.o HALT.o TASK_VANISH.o SET_STATUS.o VANISH.o READFILE.o SWEXN.o
 
 ###########################################################################
 # Object files for your automatic stack handling
@@ -162,7 +162,7 @@ AUTOSTACK_OBJS = autostack.o
 #
 # Kernel object files you provide in from kern/
 #
-KERNEL_OBJS = fake_console.o kernel.o loader.o malloc_wrappers.o
+KERNEL_OBJS = console_driver.o keyboard_driver.o timer_driver.o handler_installation.o interrupt_handler_wrappers.o kernel.o loader.o malloc_wrappers.o
 
 ###########################################################################
 # WARNING: Do not put **test** programs into the REQPROGS variables.  Your

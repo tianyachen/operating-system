@@ -7,8 +7,8 @@
  *  @bug No known bugs.
  */
 
-#include <x86/asm.h>
-#include <p1kern.h> // includes all driver interfaces declarations
+#include <asm.h>
+#include <console.h>
 #include <stdio.h>
 #include <simics.h>
 #include <ctype.h>

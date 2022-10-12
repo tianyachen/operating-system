@@ -8,7 +8,8 @@
  */
 
 #include <x86/asm.h>
-#include <p1kern.h> // includes all driver interfaces declarations
+#include <keyboard.h>
+#include <console.h>
 #include <keyhelp.h>
 #include <malloc.h>
 #include <stddef.h>

@@ -16,7 +16,6 @@
  */
 
 #include <x86/asm.h>
-#include <p1kern.h> // includes all driver interfaces declarations
 #include <limits.h>
 #include <simics.h> 
 #include <string.h>
