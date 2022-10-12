@@ -35,14 +35,26 @@
  */
 int getbytes( const char *filename, int offset, int size, char *buf )
 {
-    // placate compiler
-    (void)filename;
-    (void)offset;
-    (void)size;
-    (void)buf;
-    /*
-     * You fill in this function.
-     */
+  if ( size < 0 || offset < 0 || (!buf) ){
+    return -1;
+  }
+
+  for ( int i = 0; i < exec2obj_userapp_count; i++ ){
+    const exec2obj_userapp_TOC_entry *entry = &exec2obj_userapp_TOC[i];
+    if (strncmp(entry->execname, filename, MAX_EXECNAME_LEN) == 0){
+      if (offset > entry->execlen){
+        return -1;
+      }
+      int ret_len = min(entry->execlen - offset, size);
+      memcpy(buf, entry->execbytes + offset, ret_len);
+      return ret_len;
+    }
+  }
+
+  return -1;
+}
+
+int load(char *filename, char *argv[], uint32_t *eip, uint32_t *esp){
 
   return -1;
 }
