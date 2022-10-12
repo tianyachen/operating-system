@@ -1,57 +1,75 @@
 #include <stddef.h>
 #include <malloc.h>
+#include <mutex.h>
+
+static mutex_t heap_mutex;
+
+int malloc_init(){
+  return mutex_init( &heap_mutex );
+}
 
 /* safe versions of malloc functions */
 void *malloc(size_t size)
 {
-  (void)size;
-  return NULL;
+  mutex_lock( &heap_mutex );
+  void *mem_ptr = _malloc(size);
+  mutex_unlock( &heap_mutex );
+  return mem_ptr;
 }
 
 void *memalign(size_t alignment, size_t size)
 {
-  (void)alignment;
-  (void)size;
-  return NULL;
+  mutex_lock( &heap_mutex );
+  void *mem_ptr = _memalign(alignment, size);
+  mutex_unlock( &heap_mutex );
+  return mem_ptr;
 }
 
 void *calloc(size_t nelt, size_t eltsize)
 {
-  (void)nelt;
-  (void)eltsize;
-  return NULL;
+  mutex_lock( &heap_mutex );
+  void *mem_ptr = _calloc(nelt, eltsize);
+  mutex_unlock( &heap_mutex );
+  return mem_ptr;
 }
 
 void *realloc(void *buf, size_t new_size)
 {
-  (void)buf;
-  (void)new_size;
-  return NULL;
+  mutex_lock( &heap_mutex );
+  void *mem_ptr = _realloc(buf, new_size);
+  mutex_unlock( &heap_mutex );
+  return mem_ptr;
 }
 
 void free(void *buf)
 {
-  (void)buf;
+  mutex_lock( &heap_mutex );
+  _free(buf);
+  mutex_unlock( &heap_mutex );
   return;
 }
 
 void *smalloc(size_t size)
 {
-  (void)size;
-  return NULL;
+  mutex_lock( &heap_mutex );
+  void *mem_ptr = _smalloc(size);
+  mutex_unlock( &heap_mutex );
+  return mem_ptr;
 }
 
 void *smemalign(size_t alignment, size_t size)
 {
-  (void)alignment;
-  (void)size;
-  return NULL;
+  mutex_lock( &heap_mutex );
+  void *mem_ptr = _smemalign(alignment, size);
+  mutex_unlock( &heap_mutex );
+  return mem_ptr;
 }
 
 void sfree(void *buf, size_t size)
 {
-  (void)buf;
-  (void)size;
+  mutex_lock( &heap_mutex );
+  _sfree(buf, size);
+  mutex_unlock( &heap_mutex );
   return;
 }
 
