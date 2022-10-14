@@ -55,8 +55,23 @@ int getbytes( const char *filename, int offset, int size, char *buf )
 }
 
 int load(char *filename, char *argv[], uint32_t *eip, uint32_t *esp){
-
+  if (elf_load_helper(&se_hdr, filename) != ELF_SUCCESS) {
+    return -1;
+  }
+  // allocate_memory(se_hdr, argc, argv)
+  // eip = entry_point
+  // esp = stack_base;
+  // fill mem, new pages()
   return -1;
+}
+
+int exec(char *filename, char *argv[]){
+  uint32_t eip, esp;
+  if (load(new_filename, argv, &eip, &esp) < 0){
+    return -1;
+  }
+
+  //jump(eip);
 }
 
 /*@}*/

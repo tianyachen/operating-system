@@ -21,6 +21,10 @@
 /* x86 specific includes */
 #include <x86/asm.h>                /* enable_interrupts() */
 
+#include <malloc.h>
+#include <handler_installation.h>
+#include <device_drivers.h>
+
 volatile static int __kernel_all_done = 0;
 
 /** @brief Kernel entrypoint.
@@ -31,11 +35,19 @@ volatile static int __kernel_all_done = 0;
  */
 int kernel_main(mbinfo_t *mbinfo, int argc, char **argv, char **envp)
 {
-    // placate compiler
-    (void)mbinfo;
-    (void)argc;
-    (void)argv;
-    (void)envp;
+    if (malloc_init() < 0){
+        panic("kernel_main: malloc_init failed!");
+    }
+
+    if (handler_install(tick) < 0){
+        panic("kernel_main: handler_install failed!");
+    }
+
+    // initialzie other stuff !
+    // enable_interrupts()
+    // clear_console();
+
+
 
     /*
      * When kernel_main() begins, interrupts are DISABLED.
